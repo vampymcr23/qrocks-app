@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/decorators">
+	<!-- Excludes will never be decorated by Sitemesh. -->
+  	<excludes>
+    	<pattern>*.css</pattern>
+    	<pattern>*.js</pattern>
+    	<pattern>/images/*</pattern>
+    	<pattern>*.txt</pattern>
+    	<pattern>/mediaplayer/youtubeMediaPlayer**</pattern>
+    	<pattern>/mediaplayer/openPlaylist**</pattern>
+    	<pattern>/mediaplayer/addSong**</pattern>
+    	<pattern>/mediaplayer/getPlaylist**</pattern>
+    	<pattern>/mediaplayer/storeCurrentSong**</pattern>
+    	<pattern>/mediaplayer/getArtWork**</pattern>
+    	<pattern>/login.jsp**</pattern>
+    	<pattern>/login.php**</pattern>
+    	<pattern>/bootstrap.jsp**</pattern>
+  	</excludes>
+  	 <decorator name="mobil-theme" page="mobil-theme.jsp">
+        <pattern>/m/*</pattern>
+    </decorator>
+    
+  	<decorator name="bootstrap_mesaControl-theme" page="bootstrap_mesaControl-theme.jsp">
+        <pattern>/mesaControl/**</pattern>
+        <pattern>/mediaplayer/showPlaylist**</pattern>
+        <pattern>/mediaplayer/qrocksPlayerCreator**</pattern>
+    </decorator>
+    
+  	<decorator name="quickoWebPage-theme" page="quickoWebPage-theme.jsp">
+        <pattern>/webPage/faqs.jsp**</pattern>
+        <pattern>/webPage/beneficios.jsp**</pattern>
+        <pattern>/index.php**</pattern>
+        <pattern>/contact.php**</pattern>
+        <pattern>/contactSendInfo.php**</pattern>
+        <pattern>/webPage/quicko.jsp**</pattern>
+        <pattern>/webPage/contacto.jsp**</pattern>
+        <pattern>/terms.php**</pattern>
+        <pattern>/webPage/terminosCondiciones.jsp**</pattern>
+    </decorator>
+    
+  	<decorator name="bootstrap-theme" page="bootstrap-theme.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+  	<!-- 
+	<decorator name="desktop-theme" page="desktop-theme.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    -->
+</decorators>

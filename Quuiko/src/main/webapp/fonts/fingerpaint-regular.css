@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'FingerPaintRegular';
+    src: url('fingerpaint-regular.eot');
+    src: url('fingerpaint-regular.eot') format('embedded-opentype'),
+         url('fingerpaint-regular.woff2') format('woff2'),
+         url('fingerpaint-regular.woff') format('woff'),
+         url('fingerpaint-regular.ttf') format('truetype'),
+         url('fingerpaint-regular.svg#FingerPaintRegular') format('svg');
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+	<style src="/css/qrocks.css"></style>
+	<script type="text/javascript"></script>
+	<script type="text/javascript" src="js/mobile/jquery.min.js"></script>
+	<script type="text/javascript" src="js/mobile/skel.min.js"></script>
+	<script type="text/javascript" src="js/mobile/skel-panels.min.js"></script>
+	<script type="text/javascript" src="js/mobile/init.js"></script>
+	<noscript>
+		<style src="/css/mobile/skel-noscript.css"></style>
+		<style src="/css/mobile/style.css"></style>
+		<style src="/css/mobile/style-mobile.css"></style>	
+	</noscript>
+	<borderlayout sclass="mainContainerBody" hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer"  viewModel="@id('vm') @init('qrocks.controllers.GenericController')">
+		<north height="145px" border="none">
+			<div>
+				<div style="width:100%;height:120px;display:block;">
+					<!-- Encabezado -->
+					<div class="encabezado">
+						<div class="contenedor">
+							<div class="logo"></div>
+							<div class="titulo">
+								<div class="tituloAplicacion">
+									<label sclass="tituloAplicacionLabel" value="${c:l('aplicacion.titulo')}"/>
+								</div>
+								<div class="tituloVersion">
+									<div class="versionClass" style="display:block;padding-bottom:"><label sclass="versionClassLabel" value="${c:l('aplicacion.version')}"/></div>
+								</div>
+<!-- 								<div class="tituloVersion"> -->
+<!-- 									<div class="versionClass" style="display:block;padding-bottom:"><label id="etiquetaHora" sclass="fechaHoraLabel" /></div> -->
+<!-- 									<timer onTimer="@global-command('actualizarHora')" delay="1000" repeats="true"/> -->
+<!-- 								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<menubar autodrop="false" width="100%">
+					<menuitem label="${c:l('menu.barra.info.regresar')}" width="65%" sclass="menuRegresar" image="/imagenes/back1_16x16.png"  onClick="@global-command('regresar')" ></menuitem>
+<!-- 					<menuitem label="@load(vm.afiliacionInfo)" width="15%" sclass="menuInfoAfiliacion"></menuitem> -->
+<!-- 					<menuseparator/> -->
+<!-- 					<menuitem label="@load(vm.usuarioInfo)" width="15%" sclass="menuInfoUsuario"></menuitem> -->
+<!-- 					<menuseparator/> -->
+					<menuitem label="${c:l('menu.barra.info.salir')}" width="10%" sclass="menuInfoSalir" image="/imagenes/salir16x16.png" onClick="@global-command('logout')"></menuitem>
+				</menubar>
+			</div>
+		</north>
+		
+		<west width="50px" border="none" sclass="panelLateral"/>
+		
+		<center id="mainContent" autoscroll="true" border="none" vflex="min" hflex="min" style="height:auto;" sclass="mainContent">
+			<div class="areaTrabajo" >
+				<div self="@insert(content)"/>
+			</div>
+		</center>
+		
+		<east width="50px" border="none" sclass="panelLateral"/>
+		
+		<south height="0px">
+			<label value="Pie de pagina"/>
+		</south>
+	</borderlayout>
+</zk>

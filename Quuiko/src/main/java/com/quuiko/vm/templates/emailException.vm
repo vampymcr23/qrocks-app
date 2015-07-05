@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Excepcion de quicko</title>
+<style type="text/css">
+	.asunto{
+		font-size: 1.7em;
+	}
+	.mensaje{
+		font-size:1em;
+	}
+	
+	.leyenda{
+		font-size:0.6em;
+	}
+</style>
+</head>
+<body>
+<h3 class="titulo"> ${mensaje} </h3><br/> 
+<br/>
+<a href="http://wwww.quuiko.com">Quicko.com</a>
+</body>
+</html>

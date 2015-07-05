@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:b="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <!-- Proteger la aplicacion por medio de SpringSecurity, esta seccion se puede extender a nivel de permisos por usuario, pero falta definir el alcance -->
+   <http pattern="/redirect.jsp*" security="none"/>
+   <http pattern="/index.php*" security="none"/>
+   <http pattern="/contact.php*" security="none"/>
+   <http pattern="/terms.php*" security="none"/>
+   <http pattern="/contactSendInfo.php*" security="none"/>
+   <http pattern="/webPage/**" security="none"/>
+   <http pattern="/login.jsp*" security="none"/>
+   <http pattern="/gtVersion.php" security="none"/>
+   <http pattern="/bootstrap.jsp*" security="none"/>
+   <http pattern="/grooveShark.jsp*" security="none"/>
+   <http pattern="/oauth2callback*" security="none"/>
+  <http pattern="/login.php*" security="none"/>
+  <http pattern="/errorPage.php" security="none"/>
+  <http pattern="/errorPageRedirect.php" security="none"/>
+  <http pattern="/gallery/**" security="none"/>
+  <http pattern="/css/**" security="none"/>
+  <http pattern="/js/**" security="none"/>
+  <http pattern="/fonts/**" security="none"/>
+  <http pattern="/decorators/**" security="none"/>
+  <http pattern="/images/**" security="none"/>
+  <http pattern="/m/**" security="none"/>
+  <http pattern="/release/demo/quicko-release.apk**" security="none"/>
+  <http pattern="/productos/imagenProducto.php**" security="none"/>
+  <http auto-config="true" use-expressions="true">
+	<intercept-url pattern="/login.php*" access="isAnonymous()"/>
+    <intercept-url pattern="/css/**"         access="isAnonymous()"/>
+    <intercept-url pattern="/imagenes/**"      access="isAnonymous()"/>
+    <intercept-url pattern="/**"             access="isFullyAuthenticated()"/>
+    <intercept-url pattern="/console/**" access="hasRole('GV')"/> 
+    <intercept-url pattern="/*.properties" access="hasRole('GV')"/> 
+    <form-login login-page="/login.php" default-target-url="/afterLogin.jsp"
+			authentication-failure-url="/login.php?e=1" always-use-default-target="true"/>
+	<logout logout-success-url="/logout.php" />
+	<http-basic/>
+  </http>
+
+  <authentication-manager alias="authManager">
+    <authentication-provider>
+      <!-- Password encoder desactivado!!! -->
+      <password-encoder hash="bcrypt"/>
+      <jdbc-user-service data-source-ref="dataSource"
+                         users-by-username-query="select bu.username, bu.businessKey as password, bu.enabled as enabled from _businessUser bu where bu.username=? "
+                         authorities-by-username-query="select bu.username, bu.usrType as authority from _businessUser bu where bu.username=? "/>
+    </authentication-provider>
+  </authentication-manager>
+</b:beans>

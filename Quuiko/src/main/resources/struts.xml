@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts SYSTEM "struts-2.3.dtd">
+<struts>
+	<constant name="struts.action.extension" value="php"></constant>
+	<constant name="struts.configuration.xml.reload" value="false"/>
+	<constant name="struts.devMode" value="false"/>
+	<!-- Improve performance in production environment -->
+	<constant name="struts.freemarker.templatesCache" value="true"/>
+	<constant name="struts.freemarker.templatesCache.updateDelay" value="120"/>
+	<constant name="struts.freemarker.mru.max.strong.size" value="120"/>
+	<!-- Large files, requires Struts 2.3.x -->
+	<constant name="struts.multipart.parser" value="jakarta-stream" />
+	<constant name="struts.multipart.saveDir" value="/home/koala314/quuikoLog/tempImages" />
+	
+	<!-- BEAN VALIDATION 
+		Requiere librerias:
+		struts2-jsr303-validation-plugin-1.0.jar
+		hibernate-validator-5.1.2.Final.jar
+		validation-api-1.1.0.Final.jar
+	-->
+<!-- 	<constant name="struts.jsr303.beanValidator.providerClass" value="org.hibernate.validator.HibernateValidator"/> -->
+	<!-- END BEAN VALIDATION -->
+	<package name="qrocks-default" namespace="/" extends="struts-default">
+<!-- 	    <default-interceptor-ref name="jsr303ValidationStack"/> -->
+		<result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
+        <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+<!--             <interceptor name="encrypt" class="invi.interceptors.InviEncodeInterceptor"/> -->
+<!--             <interceptor name="decrypt" class="invi.interceptors.InviDecodeInterceptor"/> -->
+            
+            <interceptor-stack name="mainStack">
+<!--             	<interceptor-ref name="encrypt"/> -->
+<!--             	<interceptor-ref name="decrypt"/> -->
+            	<interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+	</package>
+</struts>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="QRocks" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk" >
+<!-- <style src="/css/qrocks.css"></style> -->
+	<script type="text/javascript" src="/js/mobile/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/mobile/skel.min.js"></script>
+	<script type="text/javascript" src="/js/mobile/skel-panels.min.js"></script>
+	<script type="text/javascript" src="/js/mobile/init.js"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		$(document).ready(function(){
+			setTimeout('fix();',500);
+						
+		});
+		
+		function fix(){
+			$('#skel-panels-defaultWrapper').attr('style','height:0%');
+		}
+	</script>
+	<style>
+	</style>
+	<h:noscript>
+		<style src="/css/mobile/skel-noscript.css"></style>
+		<style src="/css/mobile/style.css"></style>
+		<style src="/css/mobile/style-mobile.css"></style>
+	</h:noscript>
+<div hflex="1" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('qrocks.controllers.PedidoMesaController')"  validationMessages="@id('vmsgs')">
+<!-- MOBILE -->
+	<!-- HIDDEN VALUES -->
+			<textbox value="@bind(vm.pedido.mesa.id)" style="display:none;"/>
+			<!-- END HIDDEN VALUES -->
+		<h:div id="header" class="skel-panels-fixed">
+			
+			<h:div class="top">
+		
+				<!-- Logo -->
+					<h:div id="logo">
+						<h:span class="image avatar48">
+							<h:img src="${rutaImagenPrincipal}" width="100px" height="auto"/>
+						</h:span>
+						<h:h1 id="title">QRocks</h:h1>
+						<h:span class="byline">www.qrocks.com</h:span>
+					</h:div>
+		
+				<!-- Nav -->
+					<h:nav id="nav">
+						<h:ul>
+							<h:li><h:a href="#top" id="top-link" class="skel-panels-ignoreHref"><h:span class="icon"><h:img src="images/inbytemeImages/inviIcon_home.png" width="22" height="22" class="iconoMobil" />Pedido</h:span></h:a></h:li>
+							<h:li><h:a href="#rsvp" id="rsvp-link" class="skel-panels-ignoreHref"><h:span class="icon"><h:img src="images/inbytemeImages/inviIcon_rsvp.png" width="22" height="22" class="iconoMobil"/>Amigos</h:span></h:a></h:li>
+							<h:li><h:a href="#location" id="map-link" class="skel-panels-ignoreHref"><h:span class="icon"><h:img src="images/inbytemeImages/inviIcon_mapa.png" width="22" height="22" class="iconoMobil"/>Cuenta</h:span></h:a></h:li>
+							<h:li><h:a href="#about" id="aboutUs-link" class="skel-panels-ignoreHref"><h:span class="icon"><h:img src="images/inbytemeImages/inviIcon_more.png" width="22" height="22" class="iconoMobil"/>Acerca de...</h:span></h:a></h:li>
+						</h:ul>
+					</h:nav>
+					
+			</h:div>
+						
+			<h:div class="bottom">
+		
+				<!-- Social Icons -->
+					<h:ul class="icons">
+						<h:li><h:a href="http://www.twitter.com/inbytememx" class="icon icon-twitter"><h:span>Twitter</h:span></h:a></h:li>
+						<h:li><h:a href="http://www.inbyteme.com" class="icon"><h:img src="images/inbytemeImages/inviIcon_inbyteme.png" width="24" height="24"/></h:a></h:li>
+						<h:li><h:a href="http://www.facebook.com/inbyteme" class="icon icon-facebook"><h:span>Facebook</h:span></h:a></h:li>
+					</h:ul>
+			
+			</h:div>
+					
+		</h:div>
+
+		<!-- Main -->
+			<h:div id="main">
+				
+				<!-- Intro -->
+					<h:section id="top" class="one">
+						<h:div class="container">
+							<label value="${c:l('etiqueta.pedidoMesa.id')}"/>
+							<intbox value="@bind(vm.pedido.id)" readonly="true"/>
+							<h:br/>
+							
+							<label value="${c:l('etiqueta.pedidoMesa.mesa')}"/>
+							<textbox value="@load(vm.pedido.mesa.claveMesa)" readonly="true"/>
+							<h:br/>
+							
+							<label value="${c:l('etiqueta.pedidoMesa.fecha')}"/>
+							<textbox value="@load(vm.pedido.fecha)" width="100px" readonly="true"/>
+							<h:br/>
+							
+							<label value="${c:l('etiqueta.pedidoMesa.activo')}"/>
+							<label value="${c:l('etiqueta.pedidoMesa.activoSi')}" if="${vm.pedido.activo!=0}"/>
+							<label value="${c:l('etiqueta.pedidoMesa.activoNo')}" if="${vm.pedido.activo==0}"/>
+							<h:br/>
+						</h:div>
+					</h:section>
+					
+				<!-- Confirmacion -->
+				<!-- PARTE IMPORTANTE CONFIRMACION DEL INVITADO -->
+					<h:section id="rsvp" class="two">
+						<h:div class="container">
+					
+							<h:header>
+								<h:h2>Amigos</h:h2>
+							</h:header>
+							
+							<h:div>
+								<label value="${c:l('etiqueta.cliente.nombre')}"/>
+								<textbox value="@save(vm.cliente.alias)" maxlength="12" />
+								<h:br/>
+							</h:div>
+							<h:br/>
+							<button label="${c:l('boton.agregar')}"  sclass="button scrolly" onClick="@command('agregarClienteAlPedido')"/>
+						</h:div>
+					</h:section>
+				
+				<!-- Como llegar-->
+				<h:section id="location" class="three">
+					<h:div class="container">
+
+						<h:header>
+							<h:h2>Lista de Amigos</h:h2>
+						</h:header>
+						
+						<h:div>
+							<div children="@load(vm.personasPorPedido)">
+							<template name="children">
+								<div><label value="@load(each.alias)"/></div>
+							</template>
+							</div>
+						</h:div>
+					</h:div>
+				</h:section>
+				
+			</h:div>
+
+		<!-- Footer -->
+			<h:div id="footer">
+				
+				<!-- Copyright -->
+					<h:div class="copyright">
+						<h:p> 2013 QRocks. All rights reserved.</h:p>
+						<h:ul class="menu">
+							<h:li>Desigh: <a href="http://html5up.net">HTML5 UP</a> and icons:<a href="https://www.iconfinder.com/tmthymllr">Timothy Miller</a>/<a href="http://www.wpzoom.com">WPZOOM</a></h:li>
+						</h:ul>
+					</h:div>
+				
+			</h:div>
+</div>
+</zk>
+<!-- END MOBILE -->
+<!-- <grid height="450px"> -->
+<!-- 			<columns> -->
+<!-- 				<column width="35%" align="left"/> -->
+<!-- 				<column width="65%" align="left"/> -->
+<!-- 			</columns> -->
+<!-- 			<rows> -->
+<!-- 				<row> -->
+<!-- 					<cell><label value="${c:l('etiqueta.pedidoMesa.id')}"/></cell> -->
+<!-- 					<cell><intbox value="@bind(vm.pedido.id)" readonly="true"/></cell> -->
+<!-- 				</row> -->
+<!-- 				<row> -->
+<!-- 					<cell><label value="${c:l('etiqueta.pedidoMesa.mesa')}"/></cell> -->
+<!-- 					<cell><textbox value="@load(vm.pedido.mesa.claveMesa)" readonly="true"/></cell> -->
+<!-- 				</row> -->
+				
+<!-- 				<row> -->
+<!-- 					<cell><label value="${c:l('etiqueta.pedidoMesa.fecha')}"/></cell> -->
+<!-- 					<cell><textbox value="@load(vm.pedido.fecha)" width="100px" readonly="true"/></cell> -->
+<!-- 				</row> -->
+				
+<!-- 				<row> -->
+<!-- 					<cell><label value="${c:l('etiqueta.pedidoMesa.activo')}"/></cell> -->
+<!-- 					<cell> -->
+<!-- 						<label value="${c:l('etiqueta.pedidoMesa.activoSi')}" if="${vm.pedido.activo!=0}"/> -->
+<!-- 						<label value="${c:l('etiqueta.pedidoMesa.activoNo')}" if="${vm.pedido.activo==0}"/> -->
+<!-- 					</cell> -->
+<!-- 				</row> -->
+<!-- 				<row> -->
+<!-- 					<cell><label value="${c:l('etiqueta.cliente.nombre')}"/></cell> -->
+<!-- 					<cell><textbox value="@save(vm.cliente.alias)" maxlength="12" /></cell> -->
+<!-- 				</row> -->
+<!-- 				<row> -->
+<!-- 					<cell colspan="2" align="right" > -->
+<!-- 						<button label="${c:l('boton.agregar')}" onClick="@command('agregarClienteAlPedido')"/> -->
+<!-- 					</cell> -->
+<!-- 				</row> -->
+<!-- 				<row> -->
+<!-- 					<cell colspan="2" align="right" > -->
+<!-- 						<button label="${c:l('boton.guardar')}" onClick="@command('registrarNuevoPedido')" if="${vm.esNuevoPedido}"/> -->
+<!-- 						<button label="${c:l('boton.actualizar')}" onClick="@command('actualizarPedido')" if="${!vm.esNuevoPedido}"/> -->
+<!-- 					</cell> -->
+<!-- 				</row> -->
+<!-- 				<row> -->
+<!-- 					<cell> -->
+<!-- 						<div children="@load(vm.personasPorPedido)"> -->
+<!-- 							<template name="children"> -->
+<!-- 								<div><label value="@load(each.alias)"/></div> -->
+<!-- 							</template> -->
+<!-- 						</div> -->
+<!-- 					</cell> -->
+<!-- 				</row> -->
+<!-- 			</rows> -->
+<!-- 		</grid> -->
+<!-- 		<hlayout/> -->

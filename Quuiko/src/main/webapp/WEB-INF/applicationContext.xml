@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd 
+	                    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	                    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	                    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<context:component-scan base-package="com.quuiko.daos,com.quuiko.services.impl,com.quuiko.controllers,com.quuiko.util"/>	
+	
+    <!-- JPA + Manejador de transacciones -->
+    <context:property-placeholder location="/WEB-INF/config.properties"/>
+<!-- 	<context:property-placeholder location="file:${config.cargosRecurrentes}"/> -->
+<!-- 	<context:load-time-weaver aspectj-weaving="autodetect"/> -->
+
+	<tx:annotation-driven transaction-manager="mnjTransacciones" />	
+	
+<!--  	<jee:jndi-lookup id="dataSource" jndi-name="${config.datasource}" resource-ref="true" /> -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${config.jdbc.driverClassName}" /> 
+		<property name="url" value="${config.jdbc.url}"/>
+		<property name="username" value="${config.jdbc.username}" />
+		<property name="password" value="${config.jdbc.password}" />
+		<property name="testOnBorrow" value="true"></property>
+    	<property name="validationQuery" value="SELECT 1"></property>
+	</bean>
+	
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+ 		<property name="persistenceUnitName" value="${config.pu.nombre}" />
+      	<property name="dataSource" ref="dataSource"/>
+      	<property name="persistenceXmlLocation" value="${config.pu.loc}"/>
+      	<property name="jpaDialect">
+      		<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
+      	</property>
+       	<property name="jpaVendorAdapter">
+        	<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">         		
+        		<property name="showSql" value="${config.mostrar.sql}"/>
+            	<property name="generateDdl" value="false"/>
+                <property name="databasePlatform" value="org.eclipse.persistence.platform.database.MySQLPlatform" />
+         	</bean>         
+     	</property>       
+	</bean>
+
+ 	<bean id="mnjTransacciones" class="org.springframework.orm.jpa.JpaTransactionManager">
+    	<property name="entityManagerFactory" ref="entityManagerFactory"/>
+    	<property name="dataSource" ref="dataSource"/>
+  	</bean>  
+    <!-- End[JPA + Manejador de transaccoines] -->
+    <!-- Inyeccion de dependencias -->
+    <!-- DAOS -->
+    <bean id="negocioDao" class="com.quuiko.daos.NegocioDAO"/>
+    <bean id="mesaDao" class="com.quuiko.daos.MesaDAO"/>
+    <bean id="pedidoMesaDao" class="com.quuiko.daos.PedidoMesaDAO"/>
+    <bean id="clienteDao" class="com.quuiko.daos.ClienteDAO"/>
+    <bean id="productoDao" class="com.quuiko.daos.ProductoDAO"/>
+    <bean id="pedidoIndividualDao" class="com.quuiko.daos.PedidoIndividualDAO"/>
+    <bean id="youtubePlaylistDao" class="com.quuiko.daos.YoutubePlaylistDAO"/>
+    <bean id="youtubeVideoDao" class="com.quuiko.daos.YoutubeVideoDAO"/>
+    <bean id="youtubeUserPlaylistDao" class="com.quuiko.daos.YoutubeUserPlaylistDAO"/>
+    <bean id="youtubeUserVideoDao" class="com.quuiko.daos.YoutubeUserVideoDAO"/>
+    <bean id="gcmDao" class="com.quuiko.daos.GCMDAO"/>
+    <bean id="businessUserDao" class="com.quuiko.daos.BusinessUserDAO"/>
+    <bean id="promocionDao" class="com.quuiko.daos.PromocionDAO"/>
+    <bean id="gcmUsuarioNegocioDao" class="com.quuiko.daos.GCMUserNegocioDAO"/>
+    <bean id="bitacoraVisitaDao" class="com.quuiko.daos.BitacoraVisitaDAO"/>
+    <bean id="reservacionDao" class="com.quuiko.daos.ReservacionDAO"/>
+    <bean id="pedidoDomicilioDao" class="com.quuiko.daos.PedidoDomicilioDAO"/>
+    <bean id="pedidoProductoDomicilioDao" class="com.quuiko.daos.PedidoProductoDomicilioDAO"/>
+    <bean id="contratoNegocioDao" class="com.quuiko.daos.ContratoNegocioDAO"/>
+    <bean id="estadisticasDao" class="com.quuiko.daos.EstadisticasDAO"/>
+    
+    <!-- SERVICES -->
+    <bean id="negocioService" class="com.quuiko.services.impl.NegocioServiceImpl"/>
+    <bean id="mesaService" class="com.quuiko.services.impl.MesaServiceImpl"/>
+    <bean id="pedidoMesaService" class="com.quuiko.services.impl.PedidoMesaServiceImpl"/>
+    <bean id="clienteService" class="com.quuiko.services.impl.ClienteServiceImpl"/>
+    <bean id="qrocksMediaUtil" class="com.quuiko.util.QRocksMediaUtil">
+    	<property name="mediaFolder" value="${config.media.path}"/>
+    </bean>
+    <bean id="productoService" class="com.quuiko.services.impl.ProductoServiceImpl"/>
+    <bean id="pedidoIndividualService" class="com.quuiko.services.impl.PedidoIndividualServiceImpl"/>
+    <bean id="qrService" class="com.quuiko.services.impl.QRServiceImpl">
+    	<property name="QR_PATH" value="${config.qr.path}"></property>
+    </bean>
+    <bean id="youtubePlaylistService" class="com.quuiko.services.impl.YoutubePlaylistServiceImpl"/>
+    <bean id="youtubeVideoService" class="com.quuiko.services.impl.YoutubeVideoServiceImpl"/>
+    <bean id="youtubeUserPlaylistService" class="com.quuiko.services.impl.YoutubeUserPlaylistServiceImpl"/>
+    <bean id="youtubeUserVideoService" class="com.quuiko.services.impl.YoutubeUserVideoServiceImpl"/>
+    <bean id="gcmService" class="com.quuiko.services.impl.GCMServiceImpl"/>
+    <bean id="businessUserService" class="com.quuiko.services.impl.BusinessUserServiceImpl"/>
+    <bean id="promocionService" class="com.quuiko.services.impl.PromocionServiceImpl"/>
+    <bean id="gcmUsuarioNegocioService" class="com.quuiko.services.impl.GCMUserNegocioServiceImpl"/>
+    <bean id="gcmNotificationService" class="com.quuiko.services.impl.GCMNotificationServiceImpl">
+    	<property name="API_KEY" value="${config.g.a.key}"/>
+    	<property name="numNotificacionesPorBloque" value="${config.g.notification.numMessagePerBatch}"/>
+    	<property name="iOSkeyS" value="${config.iOS.kPath}"/>    
+    	<property name="iOSproductionMode" value="${config.iOS.productionMode}"/>
+    </bean>
+    <bean id="bitacoraVisitaService" class="com.quuiko.services.impl.BitacoraVisitaServiceImpl"/>
+    <bean id="reservacionService" class="com.quuiko.services.impl.ReservacionServiceImpl"/>
+    <bean id="administradorReservacionProgramadaService" class="com.quuiko.services.impl.AdministradorReservacionProgramadaServiceImpl">
+		<property name="reservacionService" ref="reservacionService"/>    
+	</bean>
+	<bean id="pedidoDomicilioService" class="com.quuiko.services.impl.PedidoDomicilioServiceImpl"/>
+	<bean id="pedidoProductoDomicilioService" class="com.quuiko.services.impl.PedidoProductoDomicilioServiceImpl"/>
+	<bean id="contratoNegocioService" class="com.quuiko.services.impl.ContratoNegocioServiceImpl"/>
+	<bean id="contactoService" class="com.quuiko.services.impl.ContactoServiceImpl"/>
+	<bean id="estadisticasService" class="com.quuiko.services.impl.EstadisticasServiceImpl"/>
+    
+    <import resource="applicationContext-security.xml"/>
+    
+	<!-- Se ejecuta el metodo de inicializarScheduler del bean creado anteriormente para inicializar el scheduler -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    	<property name="targetObject">
+    		<ref bean="administradorReservacionProgramadaService"/>
+    	</property>
+    	<property name="targetMethod">
+    		<value>inicializarScheduler</value>
+    	</property>
+    </bean>
+    
+    <!-- Servicio de envio de correos -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+		<property name="host" value="${mail.host}"/>
+		<property name="port" value="${mail.port}"/>
+		<property name="username" value="${mail.username}"/>
+		<property name="password" value="${mail.password}"/>
+		<property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+                <prop key="mail.smtp.quitwait">${mail.smtp.quitwait}</prop>
+            </props>
+        </property>
+	</bean>
+	
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean"> 
+		<property name="velocityProperties">
+			<props>
+            	<prop key="resource.loader">class</prop>
+            	<prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader</prop>
+			</props>
+      </property>
+   </bean>
+   
+   <bean id="emailService" class="com.quuiko.services.impl.EmailServiceImpl">
+		<property name="mailSender" ref="mailSender"/>
+		<property name="velocityEngine" ref="velocityEngine"/>
+		<property name="contactEmail" value="${mail.config.contactEmail}"/>
+		<property name="accountEmail" value="${mail.username}"/>
+	</bean>
+    <!-- End[Servicio de envio de correos] -->
+	
+    <!-- End Jobs de Quartz -->
+    
+	<!-- Configuracion del tamanio limite del archivo para ZK -->
+<!--     <bean id="tamanioLimiteArchivo" class="java.lang.Long"> -->
+<!--     	<constructor-arg index="0" value="${config.archivo.tamanioLimiteArchivo}"/> -->
+<!--     </bean> -->
+</beans>

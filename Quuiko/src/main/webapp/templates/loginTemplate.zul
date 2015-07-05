@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+	<style src="/css/Aplicacion.css"></style>
+	<style>
+		div.z-grid,tr.z-row .z-cell,div.z-grid-body{
+			background-color:transparent;
+			background:transparent;
+			border:none;
+		}
+		div.z-grid-body{
+			overflow:hidden;
+		}
+		.z-label{
+			color:#fff;
+			font-weight:bold;
+		}
+		div#hEuP4,#hEuP4{
+			background-color:#9F2B0C;
+			height:100%;
+		}
+		div.loginFormStyle div.z-grid-body{
+			overflow:hidden;
+		}
+		.z-combobox-rounded-inp,.z-combobox-rounded-readonly{
+			max-width:120px;
+		}
+	</style>
+	<borderlayout hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer"  viewModel="@id('vm') @init('com.banorte.mcr.controladores.GenericController')">
+		<north height="33%" border="none" sclass="loginNorth" />
+		<west width="17%" border="none" sclass="panelLateral"/>
+		
+		<center id="mainContent" border="none" vflex="1" hflex="1" sclass="mainContentLogin">
+			<div class="loginWorkspace" >
+				<div self="@insert(content)"/>
+			</div>
+		</center>
+		
+		<east width="17%" border="none" sclass="panelLateral"/>
+		
+		<south height="33%" border="none" sclass="loginSouth">
+		</south>
+	</borderlayout>
+</zk>

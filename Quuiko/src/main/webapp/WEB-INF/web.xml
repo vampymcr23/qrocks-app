@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>QRocks</display-name>
+	<welcome-file-list>
+		<welcome-file>/redirect.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+
+	<!-- Upload File servlet config -->
+	<!-- <context-param> -->
+	<!-- <param-name>uploadFileFolder</param-name> -->
+	<!-- <param-value>/home/koala314/quuikoLog</param-value> -->
+	<!-- <param-value>C:\\DevTools\\temporales</param-value> -->
+	<!-- </context-param> -->
+
+	<!-- Listener de Spring -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Listener de tareas programadas de reservaciones -->
+	<listener>
+		<description>Listener de Tareas programadas</description>
+		<listener-class>com.quuiko.web.listener.ReservacionesProgramadasListener</listener-class>
+	</listener>
+	<!-- FIltro de Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Filtro de CleanUp de Struts2 Integracion con Sitemesh debe de ir primero 
+		que todos -->
+	<!-- <filter> -->
+	<!-- <filter-name>struts-cleanup</filter-name> -->
+	<!-- <filter-class>org.apache.struts2.dispatcher.ActionContextCleanUp</filter-class> -->
+	<!-- </filter> -->
+
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>struts-cleanup</filter-name> -->
+	<!-- <url-pattern>/*</url-pattern> -->
+	<!-- </filter-mapping> -->
+	<!-- End CleanUp Filter -->
+	<!-- [Filtro del Decorador] debe de ir antes que Struts 2 por los valores 
+		del valuestack de Struts2 -->
+	<!-- <filter> -->
+	<!-- <filter-name>sitemesh</filter-name> -->
+	<!-- <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class> -->
+	<!-- </filter> -->
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>sitemesh</filter-name> -->
+	<!-- <url-pattern>/*</url-pattern> -->
+	<!-- </filter-mapping> -->
+	<!-- [End Decorador] -->
+<!-- 	<filter> -->
+<!-- 		<filter-name>FiltroAngularJS</filter-name> -->
+<!-- 		<filter-class>com.quuiko.filters.FiltroAngularJS</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>FiltroAngularJS</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	<!-- Filtro de Struts 2 -->
+	<!-- <filter> -->
+	<!-- <filter-name>struts2</filter-name> -->
+	<!-- <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class> -->
+	<!-- <init-param> -->
+	<!-- <param-name>actionPackages</param-name> -->
+	<!-- <param-value>com.quuiko.actions</param-value> -->
+	<!-- </init-param> -->
+	<!-- </filter> -->
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>struts2</filter-name> -->
+	<!-- <url-pattern>/*</url-pattern> -->
+	<!-- </filter-mapping> -->
+	<!-- Fin [Filtro de struts 2] -->
+	<!-- [Listener para el Decorador] -->
+	<!-- <listener> -->
+	<!-- <listener-class>org.apache.struts2.dispatcher.ng.listener.StrutsListener</listener-class> -->
+	<!-- </listener> -->
+
+	<!-- Struts 2 New version -->
+	<filter>
+		<filter-name>struts-prepare</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>struts-execute</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsExecuteFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+		<init-param>
+			<param-name>actionPackages</param-name>
+			<param-value>com.quuiko.actions</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts-prepare</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>FiltroAngularJS</filter-name>
+		<filter-class>com.quuiko.filters.FiltroAngularJS</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FiltroAngularJS</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts-execute</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>

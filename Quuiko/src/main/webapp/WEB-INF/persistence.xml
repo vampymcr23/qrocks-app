@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+ -->    
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" 
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                           xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+                             
+	<persistence-unit name="QRocksPU" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+<!-- 		<mapping-file>META-INF/jpql/UsuarioBanorte.xml</mapping-file>		 -->
+		 <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode><!-- Habilita el cache unicamente en las entidades que tengan el @Cacheable o @Cache -->
+		<properties>  	
+			<property name="eclipselink.logging.level" value="FINEST"/>		
+			<property name="eclipselink.logging.level.sql" value="FINEST"/>
+  			<property name="eclipselink.cache.shared.default" value="false"/><!-- Para habilitar el cache -->
+  			<property name="eclipselink.jdbc.timeout" value="15"/>
+  			<property name="eclipselink.jdbc.connections.wait-timeout" value="15"/>
+  			<property name="eclipselink.session-name" value="QRocksPU"/>
+  			<property name="eclipselink.logging.parameters" value="true"/>
+  			<property name="eclipselink.weaving" value="false"/>
+  		</properties>
+				
+	</persistence-unit>  
+</persistence>

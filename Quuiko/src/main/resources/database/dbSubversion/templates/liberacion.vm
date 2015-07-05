@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div style="display:block;height:55px;width:auto;min-width:300px;">
+<img src="../images/logo_AS.jpg" width="auto" height="50px"/>
+</div>
+<h2>Documentacion de versiones: $versionOrigen - $versionDestino</h2><br/>
+<h4>Fecha de creacion del documento:$fechaCreacion</h4>
+<table width="100%">
+	<tbody>
+		#foreach($liberacion in $liberaciones)
+		<tr>
+			<td>
+			<div style="color:#FFFFFF;background-color:#040C63"><b>Liberacion no. $liberacion.version</b></div>
+			<p>
+			<b>Nombre:</b>		$liberacion.name<br/>
+			<b>Fecha:</b>		$liberacion.date<br/>
+			<b>Liberacion:</b>	$liberacion.release<br/>
+			<b>Autor:</b>		$liberacion.author<br/>
+			<b>Descripcion:</b><br/>
+			<p>
+			$liberacion.summary<br/>
+			</p>
+			<b>Objetos:</b><br/>
+			<p>
+			$liberacion.objects<br/>
+			</p>
+			</p>
+			</td>
+		</tr>
+		#end
+	</tbody>
+</table>
+</body>
+</html>
