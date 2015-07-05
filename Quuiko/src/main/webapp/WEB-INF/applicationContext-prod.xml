@@ -88,9 +88,6 @@
     <bean id="qrocksMediaUtil" class="com.quuiko.util.QRocksMediaUtil">
     	<property name="mediaFolder" value="${config.media.path}"/>
     </bean>
-    <bean id="playListService" class="com.quuiko.services.impl.PlayListServiceImpl">
-    	<property name="mediaFolder" value="${config.media.path}"/>
-    </bean>
     <bean id="productoService" class="com.quuiko.services.impl.ProductoServiceImpl"/>
     <bean id="pedidoIndividualService" class="com.quuiko.services.impl.PedidoIndividualServiceImpl"/>
     <bean id="qrService" class="com.quuiko.services.impl.QRServiceImpl">
